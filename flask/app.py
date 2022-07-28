@@ -12,9 +12,15 @@ logging.basicConfig(filename='/flask/app.log', filemode='w', format='%(asctime)s
 def root():
    return (render_template('index.html'))
 
-@app.route('/chave/cadastrar')
+@app.route('/chave/cadastrar',methods=['POST','GET'])
 def cadastrar_chave():
-   return ("Nao implementado")
+   form = ChaveForm()
+   if form.validate_on_submit():
+       #PROCESSAMENTO DOS DADOS RECEBIDOS
+       app.logger.debug(u'AQUI VEM A IMPLEMENTAÇÃO DO CADASTRO DA CHAVE')
+       app.logger.debug(request.form['nome'])
+       return(redirect(url_for('root')))
+   return (render_template('form.html',form=form,action=url_for('cadastrar_chave')))
 
 @app.route('/chave/listar')
 def listar_chaves():
@@ -24,9 +30,15 @@ def listar_chaves():
 def listar_usuarios():
    return ("Nao implementado")
 
-@app.route('/usuario/cadastrar')
+@app.route('/usuario/cadastrar',methods=['POST','GET'])
 def cadastrar_usuario():
-   return ("Nao implementado")
+   form = UsuarioForm()
+   if form.validate_on_submit():
+       #PROCESSAMENTO DOS DADOS RECEBIDOS
+       app.logger.debug(u'AQUI VEM A IMPLEMENTAÇÃO DO CADASTRO DE USUÁRIO')
+       app.logger.debug(request.form['nome'])
+       return(redirect(url_for('root')))
+   return (render_template('form.html',form=form,action=url_for('cadastrar_usuario')))
 
 @app.route('/chave/emprestar')
 def emprestar_chave():
