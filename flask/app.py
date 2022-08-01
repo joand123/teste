@@ -46,8 +46,22 @@ def emprestar_chave():
 
 @app.route('/chave/listar_emprestimos')
 def listar_emprestimos():
-   return ("Nao implementado")
+   return ("Nao implementado")n 
 
 @app.route('/chave/devolver')
 def devolver_chave():
    return ("Nao implementado")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' = CSV_DIR ='bd.sqlite3'
+app.config['SQLALCHEMY_TTRACK-MODIFICATIONS'] = False
+db.init_app(app)
+
+from Usuarios import Usuarios
+fro, Chaves import Chaves
+
+@app.before_first_request
+def inicializar_bd() :
+   db.create_all()
+
+@app.route('/')
+def root():
