@@ -1,67 +1,86 @@
-from flask import Flask
-from waitress import serve
-from flask import render_template
-from flask import request,url_for,redirect,flash,session
-import logging
+{% extends "base.html" %}
 
-app = Flask(__name__)
+{% block conteudo %}
 
-logging.basicConfig(filename='/flask/app.log', filemode='w', format='%(asctime)s %(name)s - %(levelname)s - %(message)s',level=logging.DEBUG)
+<div class="container">
+    <div class="row">
+      <div class="col">
+        <img src="{{url_for('static',filename='key.png')}}">
+      </div>
+      <div class="col">
+        {% if session['autenticado']==True %}
+            #ID: {{session['usuario']}}
+        {% else %}
+            <a href="{{url_for('login')}}">ENTRAR</a>
+        {% endif %}
+      </div>
+      <div class="col">
+        {% if session['autenticado']==True %}
+            <a href="{{url_for('logout')}}">SAIR</a>
+        {% endif %}
+      </div>
+      <div class="col">
+        <img src="{{url_for('static',filename='key.png')}}">
+      </div>
+    </div>
+</div>
 
-@app.route('/')
-def root():
-   return (render_template('index.html'))
 
-@app.route('/chave/cadastrar',methods=['POST','GET'])
-def cadastrar_chave():
-   form = ChaveForm()
-   if form.validate_on_submit():
-       #PROCESSAMENTO DOS DADOS RECEBIDOS
-       app.logger.debug(u'AQUI VEM A IMPLEMENTAÇÃO DO CADASTRO DA CHAVE')
-       app.logger.debug(request.form['nome'])
-       return(redirect(url_for('root')))
-   return (render_template('form.html',form=form,action=url_for('cadastrar_chave')))
+<div class="card-group">
+    <div class="card">
+      
+      <div class="card-body">
+        <h5 class="card-title">Cadastrar Chave</h5>
+        <p class="card-text">Função para cadastramento de novas chaves.</p>
+        <p class="card-text"><small class="text-muted"><a href="{{url_for('cadastrar_chave')}}">CADASTRAR</a></small></p>
+      </div>
+    </div>
+    <div class="card">
+      
+        <div class="card-body">
+            <h5 class="card-title">Listar chaves</h5>
+            <p class="card-text">Mostra todas as chaves cadastradas</p>
+            <p class="card-text"><small class="text-muted"><a href="{{url_for('listar_chaves')}}">LISTAR</a></small></p>
+          </div>
+    </div>
+    <div class="card">
+      
+        <div class="card-body">
+            <h5 class="card-title">Emprestar Chave</h5>
+            <p class="card-text">Função para empréstimo de chave para um usuário.</p>
+            <p class="card-text"><small class="text-muted"><a href="{{url_for('emprestar_chave')}}">CADASTRAR</a></small></p>
+          </div>
+    </div>
+  </div>
 
-@app.route('/chave/listar')
-def listar_chaves():
-   return ("Nao implementado")
+  <div class="card-group">
+    <div class="card">
+      
+      <div class="card-body">
+        <h5 class="card-title">Cadastrar Usuário</h5>
+        <p class="card-text">Função para cadastramento de novos usuários.</p>
+        <p class="card-text"><small class="text-muted"><a href="{{url_for('cadastrar_usuario')}}">CADASTRAR</a></small></p>
+      </div>
+    </div>
+    <div class="card">
+      
+        <div class="card-body">
+            <h5 class="card-title">Listar usuários</h5>
+            <p class="card-text">Mostra todos os usuários cadastrados</p>
+            <p class="card-text"><small class="text-muted"><a href="{{url_for('listar_usuarios')}}">LISTAR</a></small></p>
+          </div>
+    </div>
+    <div class="card">
+      
+        <div class="card-body">
+            <h5 class="card-title">Listar Empréstimos</h5>
+            <p class="card-text">Função para listar os empréstimos das chaves.</p>
+            <p class="card-text"><small class="text-muted"><a href="{{url_for('listar_emprestimos')}}">LISTAR</a></small></p>
+          </div>
+    </div>
+  </div>
 
-@app.route('/usuario/listar')
-def listar_usuarios():
-   return ("Nao implementado")
+{% endblock %}
 
-@app.route('/usuario/cadastrar',methods=['POST','GET'])
-def cadastrar_usuario():
-   form = UsuarioForm()
-   if form.validate_on_submit():
-       #PROCESSAMENTO DOS DADOS RECEBIDOS
-       app.logger.debug(u'AQUI VEM A IMPLEMENTAÇÃO DO CADASTRO DE USUÁRIO')
-       app.logger.debug(request.form['nome'])
-       return(redirect(url_for('root')))
-   return (render_template('form.html',form=form,action=url_for('cadastrar_usuario')))
-
-@app.route('/chave/emprestar')
-def emprestar_chave():
-   return ("Nao implementado")
-
-@app.route('/chave/listar_emprestimos')
-def listar_emprestimos():
-   return ("Nao implementado")n 
-
-@app.route('/chave/devolver')
-def devolver_chave():
-   return ("Nao implementado")
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' = CSV_DIR ='bd.sqlite3'
-app.config['SQLALCHEMY_TTRACK-MODIFICATIONS'] = False
-db.init_app(app)
-
-from Usuarios import Usuarios
-fro, Chaves import Chaves
-
-@app.before_first_request
-def inicializar_bd() :
-   db.create_all()
-
-@app.route('/')
-def root():
+  
+  
