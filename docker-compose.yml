@@ -2,7 +2,7 @@ version: '3.10'
 
 services:
   flask:
-    image: flask:teste
+    image: flask:dev-enviromments
     command: python/flask/app.py
     build: 
     volumes:
