@@ -2,11 +2,11 @@ version: '3.10'
 
 services:
   flask:
-    image: flask:dev-enviromments
-    command: python/flask/app.py
-    build: 
+    image: flask:docker/dev-environments
+    command: python /flask/app.py
+    build: .
     volumes:
-      - ./flask:/flask
+      - ./flask:/vsCodeServerVolumeteste-musing_yonath
     environment:
        TZ: America/Fortaleza
     restart: always
